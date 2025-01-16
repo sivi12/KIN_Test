@@ -4,7 +4,6 @@ import { Canvas } from "@react-three/fiber";
 import { ARButton, Controllers, XR } from "@react-three/xr";
 import { GetCameraPosition } from "./helper-functions/CameraCollisonBox";
 import { useProgress } from "@react-three/drei";
-import { Charlotte13 } from "./Charlotte13";
 import { Charlotte15 } from "./Charlotte15";
 
 function App() {
@@ -20,7 +19,7 @@ function App() {
 
   const playSound = () => {
     if (audioRef.current) {
-      //audioRef.current.play();
+      audioRef.current.play();
     }
   };
 
