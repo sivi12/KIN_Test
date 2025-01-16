@@ -4,7 +4,7 @@ import { Canvas } from "@react-three/fiber";
 import { ARButton, Controllers, XR } from "@react-three/xr";
 import { GetCameraPosition } from "./helper-functions/CameraCollisonBox";
 import { useProgress } from "@react-three/drei";
-import { Charlotte15 } from "./Charlotte15";
+import { Charlotte } from "./Charlotte";
 
 function App() {
   const characterRef = useRef();
@@ -12,7 +12,6 @@ function App() {
   const [isCollidingFromBehind, setIsCollidingFromBehind] = useState(false);
   const [distance, setDistance] = useState(null);
   const [showOverlay, setShowOverlay] = useState(false);
-
   const [inAR, setInAR] = useState(false);
   const { progress } = useProgress();
   const audioRef = useRef(null);
@@ -77,22 +76,13 @@ function App() {
                   setDistance={setDistance}
                 />
                 <mesh position={[0, 0, -2]}>
-                  {/* <Charlotte13
-                    characterRef={characterRef}
-                    isColliding={isColliding}
-                    isCollidingFromBehind={isCollidingFromBehind}
-                    distance={distance}
-                    setShowOverlay={setShowOverlay}
-                  /> */}
-                  <Charlotte15
+                  <Charlotte
                     characterRef={characterRef}
                     isColliding={isColliding}
                     isCollidingFromBehind={isCollidingFromBehind}
                     distance={distance}
                     setShowOverlay={setShowOverlay}
                   />
-
-                  {/* <AnimatedCube /> */}
                 </mesh>
               </>
             )}
