@@ -12,7 +12,6 @@ import { SkeletonUtils } from "three-stdlib";
 import * as THREE from "three";
 import { handlePositionData } from "./helper-functions/handle-position-data";
 import { animationPositionHandler } from "./helper-functions/handle-animation-positions";
-import { useXR } from "@react-three/xr";
 
 export function Charlotte({
   characterRef,
@@ -21,7 +20,6 @@ export function Charlotte({
   distance,
   setShowOverlay,
 }) {
-  const { session } = useXR();
   const group = React.useRef();
   const { scene, animations: loadedAnimations } = useGLTF(
     "src/assets/charlotte15.glb"
@@ -97,7 +95,6 @@ export function Charlotte({
         setTimeout(() => {
           setCurrentAnimation("");
           setShowOverlay(true);
-          session.end();
         }, 1500);
       }
     });

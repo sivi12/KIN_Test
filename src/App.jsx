@@ -1,10 +1,12 @@
 import "./App.css";
 import { Suspense, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { ARButton, Controllers, XR } from "@react-three/xr";
-import { GetCameraPosition } from "./helper-functions/CameraCollisonBox";
+import { ARButton, XR } from "@react-three/xr";
+import { HandleCollision } from "./HandleCollison";
 import { useProgress } from "@react-three/drei";
 import { Charlotte } from "./Charlotte";
+import Test from "./helper-functions/handle-session-end";
+import { Overlay } from "./overlay";
 
 function App() {
   const characterRef = useRef();
@@ -18,14 +20,11 @@ function App() {
 
   const playSound = () => {
     if (audioRef.current) {
-      audioRef.current.play();
+      //audioRef.current.play();
     }
   };
 
-  const redirectToWebsite = () => {
-    window.location.href =
-      "https://www.theater-an-der-ruhr.de/de/programm/5759-erweiterte-realitaten";
-  };
+  <Overlay />;
 
   return (
     <>
@@ -42,22 +41,14 @@ function App() {
           }}
         />
       )}
-      {showOverlay && (
-        <div className="image-container" onClick={redirectToWebsite}>
-          <img
-            src="/src/assets/VorabVisuals.png"
-            alt="Descriptive Text"
-            className="responsive-image"
-          />
-        </div>
-      )}
+
+      <Overlay showOverlay={showOverlay} />
 
       <Canvas>
         <Suspense>
           <XR>
             {inAR && !showOverlay && (
               <>
-                <Controllers />
                 <directionalLight
                   position={[0, 1, 10]}
                   intensity={1}
@@ -69,7 +60,7 @@ function App() {
                   castShadow
                 />
                 <ambientLight intensity={1.5} />
-                <GetCameraPosition
+                <HandleCollision
                   targetRef={characterRef}
                   setIsColliding={setIsColliding}
                   setIsCollidingFromBehind={setIsCollidingFromBehind}
@@ -86,6 +77,7 @@ function App() {
                 </mesh>
               </>
             )}
+            <Test showOverlay={showOverlay} />
           </XR>
         </Suspense>
       </Canvas>

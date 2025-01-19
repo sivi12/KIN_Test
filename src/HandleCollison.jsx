@@ -1,17 +1,13 @@
-import { useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import { Text } from "@react-three/drei";
 import * as THREE from "three";
 
-export function GetCameraPosition({
+export function HandleCollision({
   targetRef,
   setIsColliding,
   setIsCollidingFromBehind,
   setDistance,
 }) {
   const { camera } = useThree();
-  const textRef = useRef();
-  const behindRef = useRef();
 
   useFrame(() => {
     const playerPositionX = targetRef.current?.matrixWorld?.elements[12];
@@ -26,46 +22,16 @@ export function GetCameraPosition({
 
     setDistance(distance);
 
-    const isCollidingFromBehind =
-      camera.position.z < playerPositionZ && distance >= 0.4;
-
-    behindRef.current.text = `●`;
-
-    textRef.current.text = `${distance}`;
-
     if (distance < 1.7) {
       if (camera.position.z > playerPositionZ) {
-        textRef.current.color = "red";
         setIsColliding(true);
       }
       if (camera.position.z < playerPositionZ && distance >= 0.3) {
-        behindRef.current.color = "orange";
         setIsCollidingFromBehind(true);
       }
     } else {
-      textRef.current.color = "green";
-      behindRef.current.color = "green";
       setIsColliding(false);
       setIsCollidingFromBehind(false);
     }
   });
-
-  return (
-    <>
-      <Text
-        ref={textRef}
-        fontSize={0.2}
-        color="green"
-        position={[0, 2.5, -2]} // Positioniere den Text vor der Kamera
-      >
-        X: 0 Y: 0 Z: 0
-      </Text>
-      <Text
-        ref={behindRef}
-        fontSize={0.2}
-        color="green"
-        position={[0, 2.2, -2]} // Positioniere den Text vor der Kamera
-      ></Text>
-    </>
-  );
 }

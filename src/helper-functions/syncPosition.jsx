@@ -17,57 +17,46 @@ export function syncPosition(
   const startZ = group.current.position.z;
   //const rotationY = group.current.rotation.y;
 
+  const handleOnUpdate = () => {
+    if (
+      currentAnimationRef.current !== animationName &&
+      group?.current?.position
+    ) {
+      console.log(currentAnimationRef.current, animationName);
+      gsap.killTweensOf(group.current.position);
+    }
+  };
+
   positions.forEach((pos, index) => {
     if (index < positions.length - 1) {
       const nextTime = times[index + 1] - times[index]; // Dauer zwischen Keyframes
       const duration = nextTime * durationMultiplier; // Zeit skaliert mit dem Multiplier
 
       if (animationName.startsWith("positive")) {
-        gsap.to(group.current.position, {
+        gsap.to(group?.current?.position, {
           duration,
           x: startX + pos.x,
           z: startZ + pos.z,
           ease: "none",
           delay: times[index] * durationMultiplier,
           onUpdate: () => {
-            if (currentAnimationRef.current !== animationName) {
-              gsap.killTweensOf(group.current.position);
-              console.log(currentAnimationRef.current, "killed");
-            }
+            handleOnUpdate();
           },
         });
       }
 
       if (animationName.startsWith("negative")) {
-        gsap.to(group.current.position, {
+        gsap.to(group?.current?.position, {
           duration,
           x: startX - pos.x,
           z: startZ - pos.z,
           ease: "none",
           delay: times[index] * durationMultiplier,
           onUpdate: () => {
-            if (currentAnimationRef.current !== animationName) {
-              console.log(currentAnimationRef.current, animationName);
-              gsap.killTweensOf(group.current.position);
-            }
+            handleOnUpdate();
           },
         });
       }
-
-      // if (animationName === "forward") {
-      //   gsap.to(group.current.position, {
-      //     duration,
-      //     x: startX - pos.x,
-      //     z: startZ - pos.z,
-      //     ease: "none",
-      //     delay: times[index] * durationMultiplier,
-      //     onUpdate: () => {
-      //       if (currentAnimationRef.current !== animationName) {
-      //         gsap.killTweensOf(group.current.position);
-      //       }
-      //     },
-      //   });
-      // }
     }
   });
 }

@@ -1,0 +1,17 @@
+export function Overlay({ showOverlay }) {
+  const redirectToWebsite = () => {
+    window.location.href =
+      "https://www.theater-an-der-ruhr.de/de/programm/5759-erweiterte-realitaten";
+  };
+  if (showOverlay) {
+    return (
+      <div className="image-container" onClick={redirectToWebsite}>
+        <img
+          src="/src/assets/VorabVisuals.png"
+          alt="Descriptive Text"
+          className="responsive-image"
+        />
+      </div>
+    );
+  } else return null;
+}
