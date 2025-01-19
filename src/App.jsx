@@ -20,7 +20,7 @@ function App() {
 
   const playSound = () => {
     if (audioRef.current) {
-      //audioRef.current.play();
+      audioRef.current.play();
     }
   };
 
