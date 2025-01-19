@@ -7,7 +7,7 @@ export function Overlay({ showOverlay }) {
     return (
       <div className="image-container" onClick={redirectToWebsite}>
         <img
-          src="/src/assets/VorabVisuals.png"
+          src="/images/VorabVisuals.png"
           alt="Descriptive Text"
           className="responsive-image"
         />

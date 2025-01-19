@@ -28,7 +28,7 @@ function App() {
 
   return (
     <>
-      <audio ref={audioRef} src="/src/assets/kin_short.mp3" preload="auto" />
+      <audio ref={audioRef} src="/sounds/kin_short.mp3" preload="auto" />
       {progress === 100 && (
         <ARButton
           className={`custom-ar-button ${inAR ? "hidden" : ""}`}

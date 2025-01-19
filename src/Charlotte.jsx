@@ -22,7 +22,7 @@ export function Charlotte({
 }) {
   const group = React.useRef();
   const { scene, animations: loadedAnimations } = useGLTF(
-    "src/assets/charlotte15.glb"
+    "models/charlotte15.glb"
   );
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
