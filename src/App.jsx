@@ -50,14 +50,12 @@ function App() {
             {inAR && !showOverlay && (
               <>
                 <directionalLight
-                  position={[0, 1, 10]}
+                  castShadow
+                  position={[5, 10, 5]}
                   intensity={1}
-                  castShadow
-                />
-                <directionalLight
-                  position={[0, -3, 10]}
-                  intensity={0}
-                  castShadow
+                  shadow-mapSize-width={512}
+                  shadow-mapSize-height={512}
+                  shadow-radius={10}
                 />
                 <ambientLight intensity={1.5} />
                 <HandleCollision
@@ -75,6 +73,15 @@ function App() {
                     setShowOverlay={setShowOverlay}
                   />
                 </mesh>
+                {/* <mesh
+                  position={[0, 0, 0]}
+                  rotation={[-Math.PI / 2, 0, 0]}
+                  receiveShadow
+                >
+                  <planeGeometry args={[10, 10]} />
+
+                  <shadowMaterial />
+                </mesh> */}
               </>
             )}
             <Test showOverlay={showOverlay} />

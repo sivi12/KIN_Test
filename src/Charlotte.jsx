@@ -33,6 +33,18 @@ export function Charlotte({
   const savedPositions = useRef(null);
 
   React.useEffect(() => {
+    if (group.current) {
+      group.current.traverse((child) => {
+        if (child.isMesh) {
+          child.frustumCulled = false; // Deaktiviert Frustum Culling
+          child.castShadow = true; // Objekt wirft Schatten
+          child.receiveShadow = true; // Objekt empfängt Schatten
+        }
+      });
+    }
+  }, []);
+
+  React.useEffect(() => {
     handlePositionData(savedPositions, loadedAnimations);
   }, [loadedAnimations]);
 
