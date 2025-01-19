@@ -6,7 +6,7 @@ import { HandleCollision } from "./HandleCollison";
 import { useProgress } from "@react-three/drei";
 import { Charlotte } from "./Charlotte";
 import Test from "./helper-functions/handle-session-end";
-import { Overlay } from "./OverlayImage";
+import { OverlayImage } from "./OverlayImage";
 
 function App() {
   const characterRef = useRef();
@@ -24,8 +24,6 @@ function App() {
     }
   };
 
-  <Overlay />;
-
   return (
     <>
       <audio ref={audioRef} src="/sounds/kin_short.mp3" preload="auto" />
@@ -42,7 +40,7 @@ function App() {
         />
       )}
 
-      <Overlay showOverlay={showOverlay} />
+      <OverlayImage showOverlay={showOverlay} />
 
       <Canvas>
         <Suspense>
