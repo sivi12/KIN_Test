@@ -22,7 +22,7 @@ export function HandleCollision({
 
     setDistance(distance);
 
-    if (distance < 1.7) {
+    if (distance < 1.5) {
       if (camera.position.z > playerPositionZ) {
         setIsColliding(true);
       }
