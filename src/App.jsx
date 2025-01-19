@@ -6,7 +6,7 @@ import { HandleCollision } from "./HandleCollison";
 import { useProgress } from "@react-three/drei";
 import { Charlotte } from "./Charlotte";
 import Test from "./helper-functions/handle-session-end";
-import { Overlay } from "./overlay";
+import { Overlay } from "./OverlayImage";
 
 function App() {
   const characterRef = useRef();

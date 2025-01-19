@@ -1,4 +1,4 @@
-export function Overlay({ showOverlay }) {
+export function OverlayImage({ showOverlay }) {
   const redirectToWebsite = () => {
     window.location.href =
       "https://www.theater-an-der-ruhr.de/de/programm/5759-erweiterte-realitaten";
