@@ -42,7 +42,7 @@
   width: 100%;
   height: 100%;
   overflow: hidden; /* Falls nötig */
-  background-color: #ffffff;
+  background-color: #2f307d;
   z-index: 1000;
 }
 
