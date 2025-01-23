@@ -26,7 +26,7 @@ export function Charlotte({
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
   const { actions, mixer } = useAnimations(loadedAnimations, group);
-  const [currentAnimation, setCurrentAnimation] = useState("");
+  const [currentAnimation, setCurrentAnimation] = useState("positiveDanceOne");
   const currentAnimationRef = useRef(currentAnimation);
   const currentRotation = useRef("0");
   const savedPositions = useRef(null);
@@ -60,11 +60,7 @@ export function Charlotte({
     backwards.clampWhenFinished = true;
 
     if (!dance.isRunning()) {
-      setTimeout(() => {
-        setCurrentAnimation("positiveDanceOne");
-        dance.play();
-      }, 200);
-
+      dance.play();
       //mixer.setTime(97);
     }
 
