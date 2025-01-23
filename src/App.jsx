@@ -6,8 +6,11 @@ import { useProgress } from "@react-three/drei";
 import { Charlotte } from "./Charlotte";
 import { OverlayImage } from "./Overlay-image";
 import HandleSessionEnd from "./helper-functions/handle-session-end";
+
 import LandingPage from "./landing-page/Landing-page";
 import { HandleSessionStart } from "./helper-functions/ar-session-starter";
+import { HandleCollision } from "./helper-functions/handle-collision";
+import HandleSound from "./helper-functions/handle-sound";
 
 function App() {
   const [showOverlay, setShowOverlay] = useState(false);
@@ -15,28 +18,15 @@ function App() {
   const { progress } = useProgress();
   const audioRef = useRef(null);
 
-  const playSound = () => {
-    if (audioRef.current) {
-      audioRef.current.play();
-    }
-  };
-
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.hidden && audioRef.current) {
-        audioRef.current.pause();
-      }
-    };
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    return () =>
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-  }, []);
+  const [isColliding, setIsColliding] = useState(false);
+  const [isCollidingFromBehind, setIsCollidingFromBehind] = useState(false);
+  const characterRef = useRef();
 
   return (
     <>
       <audio ref={audioRef} src="/sounds/kin_short.mp3" preload="auto" />
       {progress === 100 && (
-        <LandingPage playsound={playSound} inAR={inAR} setInAR={setInAR} />
+        <LandingPage audioRef={audioRef} inAR={inAR} setInAR={setInAR} />
       )}
 
       <OverlayImage showOverlay={showOverlay} />
@@ -47,6 +37,11 @@ function App() {
             {inAR && !showOverlay && (
               <>
                 <HandleSessionStart />
+                <HandleCollision
+                  targetRef={characterRef}
+                  setIsColliding={setIsColliding}
+                  setIsCollidingFromBehind={setIsCollidingFromBehind}
+                />
                 <directionalLight
                   castShadow
                   position={[5, 10, 5]}
@@ -58,11 +53,16 @@ function App() {
                 <ambientLight intensity={1.5} />
 
                 <mesh position={[0, 0, -2]}>
-                  <Charlotte setShowOverlay={setShowOverlay} />
+                  <Charlotte
+                    setShowOverlay={setShowOverlay}
+                    isColliding={isColliding}
+                    isCollidingFromBehind={isCollidingFromBehind}
+                    characterRef={characterRef}
+                  />
                 </mesh>
               </>
             )}
-
+            <HandleSound audioRef={audioRef} />
             <HandleSessionEnd showOverlay={showOverlay} />
           </XR>
         </Suspense>

@@ -1,6 +1,6 @@
 import "./Style.css";
 
-export default function LandingPage({ inAR, playsound, setInAR }) {
+export default function LandingPage({ inAR, audioRef, setInAR }) {
   if (!inAR) {
     return (
       <div className="landing-page-container">
@@ -29,7 +29,7 @@ export default function LandingPage({ inAR, playsound, setInAR }) {
             alt="Descriptive Text"
             onClick={() => {
               setInAR(true);
-              playsound();
+              audioRef.current.play();
             }}
             className="preview-image"
           />
