@@ -1,0 +1,65 @@
+.landing-page-container {
+  background-color: #232e7d;
+}
+
+.left-image,
+.right-image {
+  position: fixed; /* Damit das Bild an der linken Seite fixiert ist */
+  top: 0;
+  object-fit: contain;
+  height: 100%; /* Über die gesamte Bildschirmhöhe */
+  width: auto; /* Breite wird automatisch angepasst */
+}
+
+.left-image {
+  left: -20px;
+}
+
+.right-image {
+  right: -20px;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  color: #ffffff;
+  align-items: center;
+  text-align: center;
+  z-index: 10;
+}
+
+.text1,
+.text2,
+.text3 {
+  height: auto;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.text1 {
+  margin-top: 20vh;
+
+  font-size: 2.5em;
+}
+
+.text2 {
+  font-size: 1.1em;
+  margin-top: 3vh;
+}
+
+.info-image,
+.preview-image {
+  height: auto;
+  width: 300px;
+  margin-top: 1.7vh;
+  background-color: red;
+  object-fit: contain;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.text3 {
+  font-size: 1.1em;
+  margin-top: 6vh;
+}

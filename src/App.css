@@ -1,8 +1,15 @@
 * {
-  width: 100%;
-  height: 100%;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+.landingPageCanvas {
+  background-color: #2f307d !important;
+  z-index: 1000;
 }
 
 /* Zentriere den Button */
@@ -14,15 +21,11 @@
   width: 150px !important;
   height: 50px !important;
   font-size: 16px !important;
-  background-color: #2f307d !important;
-  color: rgb(255, 255, 255) !important;
+  background-color: #ffffff !important;
+  color: #2f307d !important;
   border: none !important;
   border-radius: 10px !important;
   cursor: pointer !important;
-}
-
-.custom-ar-button.hidden {
-  display: none !important; /* Entfernt den Button aus dem Layout */
 }
 
 .loading-indicator-text {
@@ -35,7 +38,7 @@
   color: #000000 !important;
 }
 
-.image-container {
+.overlay-image-container {
   display: flex;
   justify-content: center;
   align-items: center;

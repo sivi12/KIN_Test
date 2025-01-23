@@ -5,7 +5,7 @@ export function OverlayImage({ showOverlay }) {
   };
   if (showOverlay) {
     return (
-      <div className="image-container" onClick={redirectToWebsite}>
+      <div className="overlay-image-container" onClick={redirectToWebsite}>
         <img
           src="/images/VorabVisuals.png"
           alt="Descriptive Text"

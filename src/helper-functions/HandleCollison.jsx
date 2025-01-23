@@ -5,7 +5,6 @@ export function HandleCollision({
   targetRef,
   setIsColliding,
   setIsCollidingFromBehind,
-  setDistance,
 }) {
   const { camera } = useThree();
 
@@ -19,8 +18,6 @@ export function HandleCollision({
       ...[camera?.position.x, camera?.position.z]
     );
     const distance = camVector.distanceTo(characterVector).toFixed(3);
-
-    setDistance(distance);
 
     if (distance < 1.5) {
       if (camera.position.z > playerPositionZ) {

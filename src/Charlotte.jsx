@@ -12,14 +12,14 @@ import { SkeletonUtils } from "three-stdlib";
 import * as THREE from "three";
 import { handlePositionData } from "./helper-functions/handle-position-data";
 import { animationPositionHandler } from "./helper-functions/handle-animation-positions";
+import { HandleCollision } from "./helper-functions/HandleCollison";
 
-export function Charlotte({
-  characterRef,
-  isColliding,
-  isCollidingFromBehind,
-  distance,
-  setShowOverlay,
-}) {
+export function Charlotte({ setShowOverlay }) {
+  const characterRef = useRef();
+  const [isColliding, setIsColliding] = useState(false);
+  const [isCollidingFromBehind, setIsCollidingFromBehind] = useState(false);
+  const [distance, setDistance] = useState(null);
+
   const group = React.useRef();
   const { scene, animations: loadedAnimations } = useGLTF(
     "models/charlotte15.glb"
@@ -62,6 +62,7 @@ export function Charlotte({
 
     if (!dance.isRunning()) {
       dance.play();
+      //mixer.setTime(97);
     }
 
     if (isColliding && dance.isRunning() === true) {
@@ -149,6 +150,11 @@ export function Charlotte({
   });
   return (
     <group ref={group} dispose={null}>
+      <HandleCollision
+        targetRef={characterRef}
+        setIsColliding={setIsColliding}
+        setIsCollidingFromBehind={setIsCollidingFromBehind}
+      />
       <group name="Scene">
         <group
           name="ch_charlotte_rig_main"

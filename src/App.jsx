@@ -1,18 +1,15 @@
 import "./App.css";
-import { Suspense, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { ARButton, XR } from "@react-three/xr";
-import { HandleCollision } from "./HandleCollison";
+import { XR } from "@react-three/xr";
 import { useProgress } from "@react-three/drei";
 import { Charlotte } from "./Charlotte";
-import Test from "./helper-functions/handle-session-end";
-import { OverlayImage } from "./OverlayImage";
+import { OverlayImage } from "./Overlay-image";
+import HandleSessionEnd from "./helper-functions/handle-session-end";
+import LandingPage from "./landing-page/Landing-page";
+import { HandleSessionStart } from "./helper-functions/ar-session-starter";
 
 function App() {
-  const characterRef = useRef();
-  const [isColliding, setIsColliding] = useState(false);
-  const [isCollidingFromBehind, setIsCollidingFromBehind] = useState(false);
-  const [distance, setDistance] = useState(null);
   const [showOverlay, setShowOverlay] = useState(false);
   const [inAR, setInAR] = useState(false);
   const { progress } = useProgress();
@@ -24,29 +21,32 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden && audioRef.current) {
+        audioRef.current.pause();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, []);
+
   return (
     <>
       <audio ref={audioRef} src="/sounds/kin_short.mp3" preload="auto" />
       {progress === 100 && (
-        <ARButton
-          className={`custom-ar-button ${inAR ? "hidden" : ""}`}
-          sessionInit={{
-            optionalFeatures: ["local-floor", "bounded-floor"],
-          }}
-          onClick={() => {
-            inAR ? setInAR(false) : setInAR(true);
-            playSound();
-          }}
-        />
+        <LandingPage playsound={playSound} inAR={inAR} setInAR={setInAR} />
       )}
 
       <OverlayImage showOverlay={showOverlay} />
 
-      <Canvas>
+      <Canvas className={inAR ? "ARCanvas" : "landingPageCanvas"}>
         <Suspense>
           <XR>
             {inAR && !showOverlay && (
               <>
+                <HandleSessionStart />
                 <directionalLight
                   castShadow
                   position={[5, 10, 5]}
@@ -56,33 +56,14 @@ function App() {
                   shadow-radius={10}
                 />
                 <ambientLight intensity={1.5} />
-                <HandleCollision
-                  targetRef={characterRef}
-                  setIsColliding={setIsColliding}
-                  setIsCollidingFromBehind={setIsCollidingFromBehind}
-                  setDistance={setDistance}
-                />
-                <mesh position={[0, 0, -2]}>
-                  <Charlotte
-                    characterRef={characterRef}
-                    isColliding={isColliding}
-                    isCollidingFromBehind={isCollidingFromBehind}
-                    distance={distance}
-                    setShowOverlay={setShowOverlay}
-                  />
-                </mesh>
-                {/* <mesh
-                  position={[0, 0, 0]}
-                  rotation={[-Math.PI / 2, 0, 0]}
-                  receiveShadow
-                >
-                  <planeGeometry args={[10, 10]} />
 
-                  <shadowMaterial />
-                </mesh> */}
+                <mesh position={[0, 0, -2]}>
+                  <Charlotte setShowOverlay={setShowOverlay} />
+                </mesh>
               </>
             )}
-            <Test showOverlay={showOverlay} />
+
+            <HandleSessionEnd showOverlay={showOverlay} />
           </XR>
         </Suspense>
       </Canvas>

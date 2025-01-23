@@ -1,12 +1,20 @@
-import { useXR } from "@react-three/xr";
+import { useThree } from "@react-three/fiber";
 
 function HandleSessionEnd({ showOverlay }) {
-  const session = useXR((xr) => xr.session);
+  const { gl } = useThree(); // Zugriff auf WebGLRenderer
 
-  if (showOverlay && session) {
-    console.log(session);
-
-    session.end();
+  if (gl.xr && gl.xr.isPresenting && showOverlay) {
+    gl.xr
+      .getSession()
+      .end()
+      .then(() => {
+        console.log("AR session ended.");
+      })
+      .catch((err) => {
+        console.error("Error ending AR session:", err);
+      });
+  } else {
+    console.log("No AR session to end.");
   }
 }
 
